@@ -36,7 +36,8 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="20.0sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"/>
 
     <TextView
         android:id="@+id/tv_steps"

@@ -1,6 +1,7 @@
 package com.example.bolasepak;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,16 @@ public class ListMatch extends BaseAdapter implements Filterable {
        imgTeamA.setImageDrawable(arrayPertandingan.get(position).getLogoHome());
        imgTeamB.setImageDrawable(arrayPertandingan.get(position).getLogoAway());
        cuaca.setText(arrayPertandingan.get(position).getMatchWeather());
+       final String idEvent = arrayPertandingan.get(position).getIdEvent() ;
+       row.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                    Intent intent = new Intent(context, EventDetailActivity.class) ;
+                    intent.putExtra("id_event",idEvent) ;
+                    context.startActivity(intent);
+            }
+        }) ;
+
         return row;
     }
 

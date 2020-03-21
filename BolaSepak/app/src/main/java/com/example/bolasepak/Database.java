@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class Database extends SQLiteOpenHelper
 {
     public Database(Context context){
-        super(context,"event_database",null,1) ;
+        super(context,"match_database",null,1) ;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE IF NOT EXISTS match_events" +
+        String sql = "CREATE TABLE IF NOT EXISTS matchevents" +
                 "(" +
                 "idevent TEXT" + " , " +
                 "idhome TEXT" + " , " +
@@ -40,7 +40,7 @@ public class Database extends SQLiteOpenHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE events") ;
+        db.execSQL("DROP TABLE matchevents") ;
         onCreate(db) ;
     }
     public void addEvent(EventDetail event){
@@ -62,14 +62,14 @@ public class Database extends SQLiteOpenHelper
         contentValues.put("matchweather", event.getMatchWeather());
         contentValues.put("matchlocation", event.getMatchLocation());
 
-        sqLiteDatabase.insert("match_events", "nullable", contentValues) ;
+        sqLiteDatabase.insert("matchevents", "nullable", contentValues) ;
         sqLiteDatabase.close();
     }
 
     public EventDetail getEvent(String idEvent){
         EventDetail events = new EventDetail() ;
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM match_events WHERE idevent = " + idEvent,null) ;
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM matchevents WHERE idevent = " + idEvent,null) ;
 
         if (cursor.moveToFirst()){
             do{
@@ -98,7 +98,7 @@ public class Database extends SQLiteOpenHelper
     public ArrayList<EventDetail> getAllEvents(){
         ArrayList<EventDetail> events = new ArrayList<EventDetail>();
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM match_events",null) ;
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM matchevents",null) ;
 
         if (cursor.moveToFirst()){
             do{
@@ -127,7 +127,7 @@ public class Database extends SQLiteOpenHelper
     public ArrayList<EventDetail> searchEvents(CharSequence chars){
         ArrayList<EventDetail> events = new ArrayList<EventDetail>();
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM match_events WHERE hometeam LIKE '%"
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM matchevents WHERE hometeam LIKE '%"
                 + chars + "%' OR awayteam LIKE '%" + chars + "%'",null) ;
 
         if (cursor.moveToFirst()){
